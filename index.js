@@ -64,20 +64,20 @@ QUESTIONS = [
     question: "What does Kevin keep stashed at his desk?",
     answers: [  'Chicken fingers',
                 'Tacos',
-                "M&M's",
+                'M&Ms',
                 'Turtles',
                 ],
-    correct: "M&M's"
+    correct: 'M&Ms'
  },
 
  {
     question: "What does Michael's coffee mug say?",
-    answers: [  "'Another day another dollar'",
-                "'World's best boss'",
-                "'That is right'",
-                "'Dunder Mifflin Inc",
+    answers: [  'Another day another dollar',
+                'Worlds best boss',
+                'That is right',
+                'Dunder Mifflin Inc',
                 ],
-    correct: "World's best boss"
+    correct: 'Worlds best boss'
  },
 
  {
@@ -92,12 +92,12 @@ QUESTIONS = [
 
  {
     question: 'Where did Angela and Dwight get married?',
-    answers: [  "Schrute farm's",
+    answers: [  'Schrute farm',
                 'the office',
                 'New York City',
                 "Angela's house",
                 ],
-    correct: "Schrute farm's"
+    correct: 'Schrute farm'
  },
 ];
 
@@ -155,7 +155,6 @@ function questionRender(){
 function submitButton(){
    $('main').on('click', '.submitButton', function(event){
       event.preventDefault();
-      let questionDisplay = QUESTIONS[currentQuestion].question;
       let answerSelected = $('input[name=answers]:checked').val();
       if(!answerSelected){
          alert("YOU NEED AN ANSWER!");
@@ -226,12 +225,18 @@ function questionUpdate(){
 }
 function nextButton(){
    $('main').on('click','.nextButton', (event) => {
+      if(currentQuestion === QUESTIONS.length){
+         displayResults();
+         console.log("hey the answers are even");
+      }
+      else{
       questionUpdate();
       $('.reponse-box').replaceWith(questionRender());
-      
+      }
     });
   }
 function displayResults(){
+   if(totalAnswers == 10){
    $('main').html(`
    <div class="flex-box">
             <section class="middleBox box perfectScore">
@@ -254,18 +259,41 @@ function displayResults(){
             
         </div>
    `)
+   }
+   else{
+      $('main').html(`<div class="flex-box">
+                <section class="endingBox box">
+                    <div class="middleTitle">
+                        <h2>
+                        Do you want to try again? 
+                        </h2>
+                    </div>
+                    
+                    <div class="middle-picture">
+                        <img src="./images/try-again.jpg">
+                    </div>
+    
+                    <div class="button-container">   
+                            <button type="button" class="resetButton">
+                                Try Again
+                            </button>
+                    </div>
+                </section>
+            </div>
+      `)
+   }
+};
+function resetApp(){
+$('main').on('click','.resetButton', (event) => {
+   startQuiz();
+});
 };
 
-
-function finalSlide(){
-   $('main').on('click','.nextButton', (event) => {
-      QUESTIONS.currentQuestion === QUESTIONS.length?displayResults(): questionRender();
-    });
-};
 function quizFunctions(){
 startQuiz();
 submitButton();
-nextButton()
+nextButton();
+resetApp()
 };
 
 $(quizFunctions);
