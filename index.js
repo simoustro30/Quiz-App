@@ -106,13 +106,14 @@ function startQuiz(){
    $('.js-startButton').click( function(event){
       event.preventDefault();
       questionRender();
-      console.log('start is working');
    });
 };
 
 let currentQuestion = 0;
-let cuestionNumber = 1;
-let totalAnswers = 0;
+let score = 0;
+let questionNumber = 1;
+
+/*QUIZ DISPLAY PAGES*/
 
 function questionOptions(){
    let question = QUESTIONS[currentQuestion];
@@ -124,16 +125,27 @@ function questionOptions(){
    };
 };
 
+function updateScore(){
+   score++;
+};
+
+function updateQuestion(){
+   currentQuestion++;
+   questionNumber++;
+};
+
+
 function questionRender(){
-   $('.questionNumber').text("Question: " + cuestionNumber + "/10");
-   $('.correctAnswers').text("Score: " + totalAnswers + "/10");
+   $('.questionNumber').text("Question: " + questionNumber +"/10");
+   $('.correctAnswers').text("Score: " + score + "/10");
+   let question = QUESTIONS[currentQuestion];
     $('main').html(`
     <div class="flex-box">
          <section class="questionBox box">
                     <div class="middleTitle">
                         <h2>
-                            Question:`+ QUESTIONS[currentQuestion].question +
-                        `</h2>
+                            Question: ${question.question}
+                        </h2>
                     </div>
                   <form>  
                     <div>
@@ -152,23 +164,6 @@ function questionRender(){
     questionOptions();
 }
 
-function submitButton(){
-   $('main').on('click', '.submitButton', function(event){
-      event.preventDefault();
-      let answerSelected = $('input[name=answers]:checked').val();
-      if(!answerSelected){
-         alert("YOU NEED AN ANSWER!");
-       return;    
-      }
-      if(QUESTIONS[currentQuestion].correct === answerSelected){
-         rightAnswer();
-         totalAnswers++;
-      }
-      else{
-         wrongAnswer();
-      }
-   });
-}
 
 function rightAnswer(){
    $('main').html(`
@@ -218,27 +213,11 @@ function wrongAnswer(){
    `);
 }
 
-function questionUpdate(){
-   currentQuestion++;
-   cuestionNumber++;
-   console.log(currentQuestion)
-}
-function nextButton(){
-   $('main').on('click','.nextButton', (event) => {
-      if(currentQuestion === QUESTIONS.length){
-         displayResults();
-         console.log("hey the answers are even");
-      }
-      else{
-      questionUpdate();
-      $('.reponse-box').replaceWith(questionRender());
-      }
-    });
-  }
 function displayResults(){
-   if(totalAnswers == 10){
+   $('.correctAnswers').text("Score: " + score + "/10");
+   if(score === QUESTIONS.length){
    $('main').html(`
-   <div class="flex-box">
+   <div class="flex-box final-slide">
             <section class="middleBox box perfectScore">
                 <div class="middleTitle">
                     <h2>
@@ -261,7 +240,7 @@ function displayResults(){
    `)
    }
    else{
-      $('main').html(`<div class="flex-box">
+      $('main').html(`<div class="flex-box final-silde">
                 <section class="endingBox box">
                     <div class="middleTitle">
                         <h2>
@@ -283,17 +262,57 @@ function displayResults(){
       `)
    }
 };
-function resetApp(){
-$('main').on('click','.resetButton', (event) => {
-   startQuiz();
-});
+
+/*BUTTONS*/
+function submitButton(){
+   $('main').on('click', '.submitButton', function(event){
+      event.preventDefault();
+      let answerSelected = $('input[name=answers]:checked').val();
+         if(!answerSelected){
+            alert("YOU NEED AN ANSWER!");
+         return;    
+         }
+         if(QUESTIONS[currentQuestion].correct === answerSelected){
+            rightAnswer();
+            updateScore();
+         }
+         else{
+            wrongAnswer();
+         }
+   
+   });
+}
+
+function nextButton(){
+   $('main').on('click', '.nextButton', function(event){
+      updateQuestion();
+      if(currentQuestion === QUESTIONS.length){
+         displayResults();
+      }
+      else{
+            $('.reponse-box').replaceWith(questionRender());
+            };
+   }); 
 };
 
+function resetApp(){
+   $('main').on('click', '.resetButton', (event) => {
+      resetStats();
+      $(displayResults()).hide();
+      $(questionRender()).show();
+    });
+}
+function resetStats() {
+   currentQuestion = 0;
+   score = 0;
+   questionNumber = 1;
+}
+   
 function quizFunctions(){
 startQuiz();
 submitButton();
 nextButton();
-resetApp()
+resetApp();
 };
 
 $(quizFunctions);
