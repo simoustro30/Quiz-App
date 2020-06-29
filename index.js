@@ -202,7 +202,9 @@ function wrongAnswer(){
                 <div class="middle-picture">
                     <img src="./images/wrong-answer.png">
                 </div>
-
+               <div
+                  <p class= "corrected">The correct answer is ${QUESTIONS[currentQuestion].correct}</p>
+               </div>
                 <div class="button-container">   
                         <button type="button" class="nextButton">
                             NEXT

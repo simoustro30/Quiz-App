@@ -53,8 +53,8 @@ header, main{
 }
 
 img{
-    width: 400px;
-    height: 350px;
+    width: 350px;
+    height: 300px;
     position: solid;
     border-radius: 8px;
     border-color: #A87C63;
@@ -79,6 +79,12 @@ img{
 
 h2{
     font-family: 'Heebo', sans-serif; 
+    color: #63371D;
+}
+
+.corrected{
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;  
     color: #63371D;
 }
 
@@ -133,5 +139,5 @@ button{
     border: 1px #A87C63 solid;
     background-color: #E37D42;
     color: #ffffff;
-    font-family: 'Heebo', sans-serif
+    font-family: 'Heebo', sans-serif;
 }
