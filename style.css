@@ -62,14 +62,15 @@ img{
     border-width: 1.5px;
     box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.5);
 }
+
 /*BUTTON*/
 
 .button-container{
     padding-bottom: 40px;
 }
 
-
-.questionBox, .endingBox{
+/*QUESTION BOX ADD IF NOT WORK */
+.endingBox{
     flex-direction: column;
     justify-content: space-between;
     align-self: center;
@@ -82,7 +83,7 @@ h2{
     color: #63371D;
 }
 
-.corrected{
+p{
     font-family: 'Poppins', sans-serif;
     font-size: 20px;  
     color: #63371D;
@@ -91,25 +92,24 @@ h2{
 form{
     font-family: 'Poppins', sans-serif;
     font-size: 18px;
+
 }
 
-.js-answers{
-    display: block;
+.answers{
+    flex-direction: column;
+    margin-bottom: 10%;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
+    margin-bottom: 25px;
     padding: 0.5em;
     cursor: pointer;
     color: #63371D;
     font-weight: 800;
+    display: inline-flex;
 }
-input {
-    position: relative;
-    right: 70px;
-    top: 30px;
-}
+
+
 input[type="radio"] {
     background-color: #ddd;
     background-image: -webkit-linear-gradient(0deg, transparent 20%, hsla(0,0%,100%,.7), transparent 80%),
@@ -120,6 +120,7 @@ input[type="radio"] {
     box-shadow: inset 0 0 0 1px hsla(0,0%,0%,.6);
     cursor: pointer;
     -webkit-appearance: none;
+    ;
 }
 input[type="radio"]:after {
     border-radius: 6px;

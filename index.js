@@ -134,36 +134,45 @@ function updateQuestion(){
    questionNumber++;
 };
 
-
-function questionRender(){
+function numberUpdate(){
    $('.questionNumber').text("Question: " + questionNumber +"/10");
-   $('.correctAnswers').text("Score: " + score + "/10");
-   let question = QUESTIONS[currentQuestion];
-    $('main').html(`
-    <div class="flex-box">
-         <section class="questionBox box">
-                    <div class="middleTitle">
-                        <h2>
-                            Question: ${question.question}
-                        </h2>
-                    </div>
-                  <form>  
-                    <div>
-                     <div class= 'answers'> 
-                        <div class="js-answers"></div>
-                     <div>
-                    <div class="button-container">   
-                            <button type="submit" value='submit' class="submitButton">
-                                submit
-                            </button>
-                    </div>
-                  </form>
-         </section>
-      </div>
-    `);
-    questionOptions();
 }
 
+function scoreUpdate(){
+   $('.correctAnswers').text("Score: " + score + "/10");
+}
+
+function questionRender(){
+      numberUpdate();
+      scoreUpdate();
+      questionsBox();
+      questionOptions();
+};
+
+function questionsBox(){
+   let question = QUESTIONS[currentQuestion];  
+   $('main').html(`
+   <div class="flex-box">
+        <section class="questionBox box">
+                   <div class="middleTitle">
+                       <h2>
+                           Question: ${question.question}
+                       </h2>
+                   </div>
+                 <form>  
+                    <div class= 'answers'> 
+                       <div class="js-answers"></div>
+                    </div>
+                   <div class="button-container">   
+                           <button type="submit" value='submit' class="submitButton">
+                               submit
+                           </button>
+                   </div>
+                 </form>
+        </section>
+     </div>
+   `);
+};
 
 function rightAnswer(){
    $('main').html(`
@@ -176,7 +185,7 @@ function rightAnswer(){
                 </div>
                 
                 <div class="middle-picture">
-                    <img src="./images/correct-answer.jpg">
+                    <img src="./images/correct-answer.jpg" alt="Pam and Jim congratulating you">
                 </div>
 
                 <div class="button-container">   
@@ -200,11 +209,10 @@ function wrongAnswer(){
                 </div>
                 
                 <div class="middle-picture">
-                    <img src="./images/wrong-answer.png">
+                    <img src="./images/wrong-answer.png" alt="Michael is upset">
                 </div>
-               <div
-                  <p class= "corrected">The correct answer is ${QUESTIONS[currentQuestion].correct}</p>
-               </div>
+                  <p> The correct answer is ${QUESTIONS[currentQuestion].correct}</p>
+
                 <div class="button-container">   
                         <button type="button" class="nextButton">
                             NEXT
@@ -216,8 +224,16 @@ function wrongAnswer(){
 }
 
 function displayResults(){
-   $('.correctAnswers').text("Score: " + score + "/10");
+      scoreUpdate();
    if(score === QUESTIONS.length){
+      perfectScore();
+   }
+   else{
+      averageScore();
+   };
+};
+
+function perfectScore(){
    $('main').html(`
    <div class="flex-box final-slide">
             <section class="middleBox box perfectScore">
@@ -228,7 +244,7 @@ function displayResults(){
                 </div>
                 
                 <div class="middle-picture">
-                    <img src="./images/perfect-score.jpg">
+                    <img src="./images/perfect-score.jpg" alt="Michael, Dwight and Jim standing on a podium">
                 </div>
 
                 <div class="button-container">   
@@ -240,29 +256,29 @@ function displayResults(){
             
         </div>
    `)
-   }
-   else{
-      $('main').html(`<div class="flex-box final-silde">
-                <section class="endingBox box">
-                    <div class="middleTitle">
-                        <h2>
-                        Do you want to try again? 
-                        </h2>
-                    </div>
-                    
-                    <div class="middle-picture">
-                        <img src="./images/try-again.jpg">
-                    </div>
-    
-                    <div class="button-container">   
-                            <button type="button" class="resetButton">
-                                Try Again
-                            </button>
-                    </div>
-                </section>
-            </div>
-      `)
-   }
+   };
+
+function averageScore(){
+   $('main').html(`<div class="flex-box final-silde">
+   <section class="endingBox box">
+       <div class="middleTitle">
+           <h2>
+           Do you want to try again? 
+           </h2>
+       </div>
+       
+       <div class="middle-picture">
+           <img src="./images/try-again.jpg" alt="Dwight with a scary face mask on his face">
+       </div>
+
+       <div class="button-container">   
+               <button type="button" class="resetButton">
+                   Try Again
+               </button>
+       </div>
+   </section>
+</div>
+`);
 };
 
 /*BUTTONS*/
